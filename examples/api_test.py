@@ -93,6 +93,15 @@ print("Testing the networking")
 assert("name" in container.get_keys("lxc.net.0"))
 assert(len(container.network) == 1)
 
+# Getting config items under indexed key
+print("Accessing indexed config entries")
+
+for idx, interface in enumerate(container.get_config_item("lxc.net")):
+   for attribute in ("type", "link", "flags", "hwaddr"):
+      key = "lxc.net.%s.%s" % (idx, attribute)
+      print("%s = %s" % (key, container.get_config_item(key)))
+
+
 ## Starting the container
 print("Starting the container")
 container.start()
